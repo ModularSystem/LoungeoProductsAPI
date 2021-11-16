@@ -108,31 +108,3 @@ ALTER TABLE Features ADD FOREIGN KEY (product_id) REFERENCES Products (product_i
 ALTER TABLE Photos ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
 ALTER TABLE Related Products ADD FOREIGN KEY (product_id) REFERENCES Products (product_id);
 ALTER TABLE Skus ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
-
--- ---
--- Table Properties
--- ---
-
--- SQLINES DEMO *** ucts` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- SQLINES DEMO *** es` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- SQLINES DEMO *** ures` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- SQLINES DEMO *** os` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- SQLINES DEMO *** ted Products` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- SQLINES DEMO *** ` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ---
--- Test Data
--- ---
-
--- SQLINES DEMO *** ucts` (`product_id`,`name`,`slogan`,`description`,`category`,`default_price`) VALUES
--- SQLINES DEMO *** ');
--- SQLINES DEMO *** es` (`style_id`,`product_id`,`style_name`,`original_price`,`sale_price`,`default`) VALUES
--- SQLINES DEMO *** ');
--- SQLINES DEMO *** ures` (`feature_id`,`product_id`,`feature`,`value`) VALUES
--- ('','','','');
--- SQLINES DEMO *** os` (`photo_id`,`style_id`,`thumbnail_url`,`url`) VALUES
--- ('','','','');
--- SQLINES DEMO *** ted Products` (`join_id`,`product_id`,`related_id`) VALUES
--- ('','','');
--- SQLINES DEMO *** ` (`size_id`,`style_id`,`quantity`,`size`) VALUES
--- ('','','','');

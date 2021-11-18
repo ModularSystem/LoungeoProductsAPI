@@ -1,0 +1,61 @@
+const pool = require('../db');
+
+const getItems = (req, res) => {
+  const count = Number(req.query.count) || 5;
+  const page = Number(req.query.page - 1) * count || 0;
+  pool.query(`SELECT * FROM products LIMIT ${count} OFFSET ${page}`, (error, results) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+    res.status(200).send(results.rows);
+  });
+};
+
+const getItem = (req, res) => {
+  const id = Number(req.params.id);
+  pool.query(`
+  SELECT *, (
+    SELECT json_agg(x) FROM (
+      SELECT feature, value FROM features WHERE id = ${id}
+      ) x
+    ) features FROM products WHERE id = ${id}
+    `, (error, results) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+    res.status(200).send(results.rows[0]);
+  });
+};
+
+const getStyles = (req, res) => {
+  const id = Number(req.params.id);
+  pool.query(`
+  SELECT style_id, style_name, (
+    SELECT json_agg(x) FROM (
+      SELECT url, thumbnail_url FROM photos WHERE photos.style_id = styles.style_id
+      ) x
+    ) photos FROM styles WHERE id = ${id}
+    `, (error, results) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+    res.status(200).send(results.rows);
+  });
+};
+
+const getRelated = (req, res) => {
+  const id = Number(req.params.id);
+  pool.query(`SELECT array_agg(related_id) FROM relatedproducts WHERE id = ${id}`, (error, results) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+    res.status(200).send(results.rows[0].array_agg);
+  });
+};
+
+module.exports = {
+  getItems,
+  getItem,
+  getStyles,
+  getRelated,
+};

@@ -1,18 +1,18 @@
-const mysql = require('mysql2');
+const { Pool } = require('pg');
 
-const connection = mysql.createConnection({
+const credentials = {
+  user: 'noahlehman',
   host: 'localhost',
-  user: 'root',
-  database: 'movielist',
-});
+  database: 'overview',
+  password: '',
+  port: 5432,
+};
 
-connection.connect((err) => {
-  if (err) {
-    console.error(`error connecting: ${err.stack}`);
-    return;
-  }
+const pool = new Pool(credentials);
+// async function query() {
+//   const pool = new Pool(credentials);
+//   await pool.query('');
+//   await pool.end();
+// }
 
-  console.log(`connected as id ${connection.threadId}`);
-});
-
-module.exports = connection;
+module.exports = pool;

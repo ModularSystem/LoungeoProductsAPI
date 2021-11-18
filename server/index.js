@@ -1,11 +1,20 @@
-const app = require('./app');
+const express = require('express');
+const { getItems, getItem, getStyles, getRelated } = require('./models.js');
 
-const port = 8080;
-const postgresConfig = require('./db/postgresConfig');
+const app = express();
+const PORT = 8080 || process.env.PORT;
 
-if (require.main === module) {
-  app.listen(port, () => {
-    console.log(`Questions and Answers API running on ${port}`);
-  });
-}
-postgresConfig();
+app.use(express.static('client/dist'));
+
+app.use(express.json());
+
+app.get('/products', getItems);
+app.get('/products/:id', getItem);
+app.get('/products/:id/styles', getStyles);
+app.get('/products/:id/related', getRelated);
+
+// app.post()
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
+});

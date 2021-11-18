@@ -1,7 +1,7 @@
 -- ---
 -- Globals
 -- ---
-DROP DATABASE IF EXISTS overview;
+dropdb IF EXISTS overview;
 CREATE DATABASE overview;
 \c overview;
 
@@ -10,7 +10,7 @@ CREATE DATABASE overview;
 --
 -- ---
 
-DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Products CASCADE;
 
 CREATE TABLE Products (
   id INTEGER NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Products (
 --
 -- ---
 
-DROP TABLE IF EXISTS Styles;
+DROP TABLE IF EXISTS Styles CASCADE;
 
 CREATE TABLE Styles (
   style_id INTEGER NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE Styles (
 --
 -- ---
 
-DROP TABLE IF EXISTS Features;
+DROP TABLE IF EXISTS Features CASCADE;
 
 CREATE TABLE Features (
   feature_id INTEGER NOT NULL,
@@ -59,22 +59,36 @@ CREATE TABLE Features (
 --
 -- ---
 
-DROP TABLE IF EXISTS Photos;
+DROP TABLE IF EXISTS Photos CASCADE;
 
 CREATE TABLE Photos (
   photo_id INTEGER NOT NULL,
   style_id INTEGER NULL DEFAULT NULL,
   url VARCHAR(255) NULL DEFAULT NULL,
   thumbnail_url VARCHAR(255) NULL DEFAULT NULL,
+  -- photo_isolate INTEGER DEFAULT NULL,
   PRIMARY KEY (photo_id)
 );
+
+-- ---
+-- Table 'Photos Unique'
+--
+-- ---
+
+-- DROP TABLE IF EXISTS photos_dic CASCADE;
+
+-- CREATE TABLE photos_dic (
+--   photo_isolate SERIAL PRIMARY KEY,
+--   url VARCHAR(255) NULL DEFAULT NULL,
+--   thumbnail_url VARCHAR(255) NULL DEFAULT NULL
+-- );
 
 -- ---
 -- Table 'Related Products'
 --
 -- ---
 
-DROP TABLE IF EXISTS RelatedProducts;
+DROP TABLE IF EXISTS RelatedProducts CASCADE;
 
 CREATE TABLE RelatedProducts (
   join_id INTEGER NOT NULL,
@@ -88,7 +102,7 @@ CREATE TABLE RelatedProducts (
 --
 -- ---
 
-DROP TABLE IF EXISTS Skus;
+DROP TABLE IF EXISTS Skus CASCADE;
 
 CREATE TABLE Skus (
   size_id INTEGER NOT NULL,
@@ -102,8 +116,8 @@ CREATE TABLE Skus (
 -- Foreign Keys
 -- ---
 
--- ALTER TABLE Styles ADD FOREIGN KEY (id) REFERENCES Products (id);
--- ALTER TABLE Features ADD FOREIGN KEY (id) REFERENCES Products (id);
--- ALTER TABLE Photos ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
--- ALTER TABLE RelatedProducts ADD FOREIGN KEY (id) REFERENCES Products (id);
--- ALTER TABLE Skus ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
+ALTER TABLE Features ADD FOREIGN KEY (id) REFERENCES Products (id);
+ALTER TABLE RelatedProducts ADD FOREIGN KEY (id) REFERENCES Products (id);
+ALTER TABLE Styles ADD FOREIGN KEY (id) REFERENCES Products (id);
+ALTER TABLE Photos ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
+ALTER TABLE Skus ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);

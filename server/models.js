@@ -30,16 +30,24 @@ const getItem = (req, res) => {
 const getStyles = (req, res) => {
   const id = Number(req.params.id);
   pool.query(`
-  SELECT style_id, style_name, (
+  SELECT style_id, style_name AS name, original_price, sale_price, default_style, (
     SELECT json_agg(x) FROM (
-      SELECT url, thumbnail_url FROM photos WHERE photos.style_id = styles.style_id
-      ) x
-    ) photos FROM styles WHERE id = ${id}
-    `, (error, results) => {
+      SELECT url, thumbnail_url FROM photos WHERE styles.style_id = photos.style_id
+    ) x
+  ) photos, (
+    SELECT json_agg(y) FROM (
+      SELECT quantity, size FROM skus WHERE styles.style_id = skus.style_id
+    ) y
+  ) skus
+  FROM styles WHERE id = 1`, (error, results) => {
     if (error) {
       res.status(404).send(error);
     }
-    res.status(200).send(results.rows);
+    const resObj = {
+      product_id: id,
+      results: results.rows,
+    };
+    res.status(200).send(resObj);
   });
 };
 

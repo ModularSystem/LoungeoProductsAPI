@@ -92,8 +92,8 @@ DROP TABLE IF EXISTS RelatedProducts CASCADE;
 
 CREATE TABLE RelatedProducts (
   join_id INTEGER NOT NULL,
-  id INTEGER NULL DEFAULT NULL,
-  related_id INTEGER NULL DEFAULT NULL,
+  id INTEGER NOT NULL DEFAULT NULL,
+  related_id INTEGER NOT NULL DEFAULT NULL,
   PRIMARY KEY (join_id)
 );
 
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS Skus CASCADE;
 
 CREATE TABLE Skus (
   size_id INTEGER NOT NULL,
-  style_id INTEGER NULL DEFAULT NULL,
+  style_id INTEGER NOT NULL,
   size VARCHAR(255) NULL DEFAULT NULL,
   quantity INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (size_id)
@@ -121,3 +121,7 @@ ALTER TABLE RelatedProducts ADD FOREIGN KEY (id) REFERENCES Products (id);
 ALTER TABLE Styles ADD FOREIGN KEY (id) REFERENCES Products (id);
 ALTER TABLE Photos ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
 ALTER TABLE Skus ADD FOREIGN KEY (style_id) REFERENCES Styles (style_id);
+
+-- ---
+-- Foreign Keys
+-- ---

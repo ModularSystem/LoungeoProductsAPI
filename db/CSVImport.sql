@@ -1,19 +1,19 @@
 \c overview;
 
 -- Products
--- \COPY products FROM 'SDC_CSVs/product.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+\COPY products FROM 'SDC_CSVs/product.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
 
--- --Styles
--- \COPY styles FROM 'SDC_CSVs/styles.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
--- CREATE INDEX ON styles (id);
+--Styles
+\COPY styles FROM 'SDC_CSVs/styles.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON styles (id);
 
--- -- Features
--- \COPY features FROM 'SDC_CSVs/features.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
--- CREATE INDEX ON features (id);
+-- Features
+\COPY features FROM 'SDC_CSVs/features.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON features (id);
 
--- -- Related Products
--- \COPY relatedproducts FROM 'SDC_CSVs/related.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
--- CREATE INDEX ON relatedproducts (id);
+-- Related Products
+\COPY relatedproducts FROM 'SDC_CSVs/related.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON relatedproducts (id);
 
 -- Photos
 \COPY photos FROM 'SDC_CSVs/photos.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';

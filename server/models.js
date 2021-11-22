@@ -61,9 +61,32 @@ const getRelated = (req, res) => {
   });
 };
 
+const getCart = (req, res) => {
+  pool.query('SELECT * FROM cart', (error, results) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+    res.status(200).send(results.rows);
+  });
+};
+
+const postCart = (req, res) => {
+  console.log(req.body);
+  const skuId = req.body.sku_id;
+  const { count } = req.body;
+  pool.query(`INSERT INTO cart(sku_id, count) VALUES(${skuId}, ${count})`, (error) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+    res.status(201).send('Cart updated successfully.');
+  });
+};
+
 module.exports = {
   getItems,
   getItem,
   getStyles,
   getRelated,
+  getCart,
+  postCart,
 };

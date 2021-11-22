@@ -105,11 +105,20 @@ CREATE TABLE RelatedProducts (
 DROP TABLE IF EXISTS Skus CASCADE;
 
 CREATE TABLE Skus (
-  size_id INTEGER NOT NULL,
+  sku_id INTEGER NOT NULL,
   style_id INTEGER NOT NULL,
   size VARCHAR(255) NULL DEFAULT NULL,
   quantity INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (size_id)
+  PRIMARY KEY (sku_id)
+);
+
+DROP TABLE IF EXISTS Cart CASCADE;
+
+CREATE TABLE Cart (
+  cart_id SERIAL,
+  sku_id INTEGER NOT NULL,
+  count INTEGER,
+  PRIMARY KEY (cart_id)
 );
 
 -- ---

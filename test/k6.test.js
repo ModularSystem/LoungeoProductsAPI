@@ -13,6 +13,8 @@ export const options = {
     'http_req_duration{type:getItem}': ['p(95)<500'],
     'http_req_duration{type:getStyles}': ['p(95)<500'],
     'http_req_duration{type:getRelated}': ['p(95)<500'],
+    'http_req_duration{type:getCart}': ['p(95)<500'],
+    'http_req_duration{type:postCart}': ['p(95)<500'],
   },
 };
 
@@ -33,5 +35,13 @@ export default function () {
 
   const getRelated = http.get(`${url}/products/${id}/related`, { tags: { type: 'getRelated' } });
   check(getRelated, { 'status was 200': r => r.status = 200 });
+  sleep(1);
+
+  const getCart = http.get(`${url}/cart`, { tags: { type: 'getCart' } });
+  check(getCart, { 'status was 200': r => r.status = 200 });
+  sleep(1);
+
+  const postCart = http.post(`${url}/cart`, { sku_id: 12, count: 2 }, { tags: { type: 'postCart' } });
+  check(postCart, { 'status was 200': r => r.status = 201 });
   sleep(1);
 }

@@ -1,17 +1,28 @@
 \c overview;
 
+-- Products
 \COPY products FROM 'SDC_CSVs/product.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
 
+--Styles
 \COPY styles FROM 'SDC_CSVs/styles.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON styles (id);
 
+-- Features
 \COPY features FROM 'SDC_CSVs/features.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON features (id);
 
-\COPY photos FROM 'SDC_CSVs/photos.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
--- (photo_id, style_id, url, thumbnail_url)
-
+-- Related Products
 \COPY relatedproducts FROM 'SDC_CSVs/related.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON relatedproducts (id);
 
+-- Photos
+\COPY photos FROM 'SDC_CSVs/photos.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON photos (style_id);
+
+
+-- SKUS
 \COPY skus FROM 'SDC_CSVs/skus.csv' WITH DELIMITER ',' CSV HEADER NULL AS 'null';
+CREATE INDEX ON skus (style_id);
 
 -- INSERT INTO photos_dic (url, thumbnail_url) SELECT DISTINCT url, thumbnail_url FROM photos;
 

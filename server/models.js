@@ -13,7 +13,6 @@ const getItems = (req, res) => {
 
 const getItem = (req, res) => {
   const id = Number(req.params.id);
-  console.log(id);
   pool.query(`
   SELECT *, (
     SELECT json_agg(x) FROM (
@@ -22,9 +21,12 @@ const getItem = (req, res) => {
     ) features FROM products WHERE id = ${id}
     `, (error, results) => {
     if (error) {
+      console.log(error);
       res.status(404).send(error);
+    } else {
+      console.log(results);
+      res.status(200).send(results.rows[0]);
     }
-    res.status(200).send(results.rows[0]);
   });
 };
 

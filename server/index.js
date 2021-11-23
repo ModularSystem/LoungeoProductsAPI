@@ -1,8 +1,10 @@
 const express = require('express');
-const { getItems, getItem, getStyles, getRelated, getCart, postCart } = require('./models.js');
+const {
+  getItems, getItem, getStyles, getRelated, getCart, postCart,
+} = require('./models.js');
 
 const app = express();
-const PORT = 8080 || process.env.PORT;
+const PORT = 80 || process.env.PORT;
 
 app.use(express.static('client/dist'));
 

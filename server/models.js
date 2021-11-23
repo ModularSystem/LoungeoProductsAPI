@@ -13,6 +13,7 @@ const getItems = (req, res) => {
 
 const getItem = (req, res) => {
   const id = Number(req.params.id);
+  console.log(id);
   pool.query(`
   SELECT *, (
     SELECT json_agg(x) FROM (
@@ -23,7 +24,6 @@ const getItem = (req, res) => {
     if (error) {
       res.status(404).send(error);
     }
-    console.log(results.rows[0]);
     res.status(200).send(results.rows[0]);
   });
 };

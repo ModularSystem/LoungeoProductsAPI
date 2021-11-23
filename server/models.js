@@ -23,6 +23,7 @@ const getItem = (req, res) => {
     if (error) {
       res.status(404).send(error);
     }
+    console.log(results.rows[0]);
     res.status(200).send(results.rows[0]);
   });
 };

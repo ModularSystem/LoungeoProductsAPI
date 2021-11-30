@@ -22,6 +22,7 @@ const getItem = (req, res) => {
     ) features FROM products WHERE id = ${id}
     `, (error, results) => {
     if (error) {
+      console.log(error);
       res.status(404).send(error);
     } else {
       res.status(200).send(results.rows[0]);

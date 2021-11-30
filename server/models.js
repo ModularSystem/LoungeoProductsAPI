@@ -6,8 +6,9 @@ const getItems = (req, res) => {
   pool.query(`SELECT * FROM products LIMIT ${count} OFFSET ${page}`, (error, results) => {
     if (error) {
       res.status(404).send(error);
+    } else {
+      res.status(200).send(results.rows);
     }
-    res.status(200).send(results.rows);
   });
 };
 
@@ -21,10 +22,8 @@ const getItem = (req, res) => {
     ) features FROM products WHERE id = ${id}
     `, (error, results) => {
     if (error) {
-      console.log(error);
       res.status(404).send(error);
     } else {
-      console.log(results);
       res.status(200).send(results.rows[0]);
     }
   });
@@ -45,12 +44,13 @@ const getStyles = (req, res) => {
   FROM styles WHERE id = 1`, (error, results) => {
     if (error) {
       res.status(404).send(error);
+    } else {
+      const resObj = {
+        product_id: id,
+        results: results.rows,
+      };
+      res.status(200).send(resObj);
     }
-    const resObj = {
-      product_id: id,
-      results: results.rows,
-    };
-    res.status(200).send(resObj);
   });
 };
 
@@ -59,8 +59,9 @@ const getRelated = (req, res) => {
   pool.query(`SELECT array_agg(related_id) FROM relatedproducts WHERE id = ${id}`, (error, results) => {
     if (error) {
       res.status(404).send(error);
+    } else {
+      res.status(200).send(results.rows[0].array_agg);
     }
-    res.status(200).send(results.rows[0].array_agg);
   });
 };
 
@@ -68,20 +69,21 @@ const getCart = (req, res) => {
   pool.query('SELECT * FROM cart', (error, results) => {
     if (error) {
       res.status(404).send(error);
+    } else {
+      res.status(200).send(results.rows);
     }
-    res.status(200).send(results.rows);
   });
 };
 
 const postCart = (req, res) => {
-  console.log(req.body);
   const skuId = req.body.sku_id;
   const { count } = req.body;
   pool.query(`INSERT INTO cart(sku_id, count) VALUES(${skuId}, ${count})`, (error) => {
     if (error) {
       res.status(404).send(error);
+    } else {
+      res.status(201).send('Cart updated successfully.');
     }
-    res.status(201).send('Cart updated successfully.');
   });
 };
 

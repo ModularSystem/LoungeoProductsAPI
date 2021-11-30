@@ -5,7 +5,7 @@ import { sleep, check } from 'k6';
 const url = 'http://localhost:8080';
 
 export const options = {
-  vus: 10,
+  vus: 1000,
   duration: '30s',
   out: 'csv=product_api_k6_results.csv',
   thresholds: {

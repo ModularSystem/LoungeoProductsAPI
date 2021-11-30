@@ -13,6 +13,7 @@ const getItems = (req, res) => {
 };
 
 const getItem = (req, res) => {
+  console.log('starting');
   const id = Number(req.params.id);
   pool.query(`
   SELECT *, (
@@ -22,7 +23,7 @@ const getItem = (req, res) => {
     ) features FROM products WHERE id = ${id}
     `, (error, results) => {
     if (error) {
-      console.log(error);
+      console.log('error', error);
       res.status(404).send(error);
     } else {
       res.status(200).send(results.rows[0]);
